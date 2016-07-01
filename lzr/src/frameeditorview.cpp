@@ -4,7 +4,7 @@
 #include "settings.h"
 #include "utils.h"
 
-#define ZOOM_FACTOR 1.2
+#define ZOOM_FACTOR 1.05
 
 
 FrameEditor::FrameEditor(QWidget *parent) : QGraphicsView(parent)

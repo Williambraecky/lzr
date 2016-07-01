@@ -4,7 +4,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QVector2D>
-
+#include <math.h>
 
 const QRectF frame_bounds(-1.0, -1.0, 2.0, 2.0);
 

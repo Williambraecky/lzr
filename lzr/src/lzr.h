@@ -23,11 +23,15 @@ public:
 
 public slots:
     void frame_changed(const QModelIndex& start, const QModelIndex& end);
+    void rowsInserted(const QModelIndex& path, int a, int b);
+    void rowsRemoved(const QModelIndex& path, int a, int b);
 
 private:
     void setupUi();
     void show_frameeditor(Frame* frame);
     void show_clipeditor();
+
+    void send_frame();
 
     QStackedWidget* stack;
 
@@ -52,4 +56,5 @@ private:
     Frame* frame;
     void* zmq_ctx;
     void* zmq_pub;
+    lzr::Optimizer* opt;
 };

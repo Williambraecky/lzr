@@ -143,7 +143,7 @@ lzr::Frame Frame::get_frame()
 {
     lzr::Frame output;
 
-    foreach(const lzr::Frame& path, paths)
+    foreach(lzr::Frame path, paths)
     {
         output.add_with_blank_jump(path);
     }

@@ -25,8 +25,16 @@ LZR::LZR()
 
     connect(frame, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(frame_changed(const QModelIndex&, const QModelIndex&)));
+    connect(frame, SIGNAL(rowsInserted(const QModelIndex&, int, int)),
+            this, SLOT(path_added(const QModelIndex&, int, int)));
+    connect(frame, SIGNAL(rowsRemoved(const QModelIndex&, int, int)),
+            this, SLOT(path_removed(const QModelIndex&, int, int)));
 
 
+    opt = new lzr::Optimizer();
+    opt->reorder_paths = false;
+    opt->anchor_points_lit = 4;
+    opt->anchor_points_blanked = 8;
     zmq_ctx = zmq_ctx_new();
     zmq_pub = lzr::frame_pub_new(zmq_ctx, LZRD_GRAPHICS_ENDPOINT);
 }
@@ -108,6 +116,29 @@ void LZR::frame_changed(const QModelIndex& start, const QModelIndex& end)
 {
     Q_UNUSED(start);
     Q_UNUSED(end);
+    send_frame();
+}
+
+void LZR::rowsInserted(const QModelIndex& path, int a, int b)
+{
+    Q_UNUSED(path);
+    Q_UNUSED(a);
+    Q_UNUSED(b);
+    send_frame();
+}
+
+void LZR::rowsRemoved(const QModelIndex& path, int a, int b)
+{
+    Q_UNUSED(path);
+    Q_UNUSED(a);
+    Q_UNUSED(b);
+    send_frame();
+}
+
+void LZR::send_frame()
+{
     lzr::Frame f = frame->get_frame();
-    send_frame(zmq_pub, f);
+    opt->run(f);
+    lzr::interpolate(f);
+    lzr::send_frame(zmq_pub, f);
 }
