@@ -26,9 +26,9 @@ LZR::LZR()
     connect(frame, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(frame_changed(const QModelIndex&, const QModelIndex&)));
     connect(frame, SIGNAL(rowsInserted(const QModelIndex&, int, int)),
-            this, SLOT(path_added(const QModelIndex&, int, int)));
+            this, SLOT(rowsInserted(const QModelIndex&, int, int)));
     connect(frame, SIGNAL(rowsRemoved(const QModelIndex&, int, int)),
-            this, SLOT(path_removed(const QModelIndex&, int, int)));
+            this, SLOT(rowsRemoved(const QModelIndex&, int, int)));
 
 
     opt = new lzr::Optimizer();
