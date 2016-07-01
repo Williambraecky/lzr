@@ -16,3 +16,4 @@ INCLUDEPATH += ../liblzr
 # TODO: switch this to the installed path
 LIBS += ../liblzr/liblzr.so
 # LIBS += -llzr
+LIBS += -lzmq

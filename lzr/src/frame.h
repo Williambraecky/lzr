@@ -37,6 +37,8 @@ public:
     lzr::Frame get_path(const QModelIndex& index) const;
     bool set_path(const QModelIndex& index, lzr::Frame path);
 
+    lzr::Frame get_frame();
+
 private:
     QList<lzr::Frame> paths; //partial laser frames, split by blanking jumps
 };

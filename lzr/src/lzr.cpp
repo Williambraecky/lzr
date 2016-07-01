@@ -19,14 +19,21 @@ LZR::LZR()
     f.add(                lzr::Point(0,  0,  255, 255, 255, 255));
     f.add(                lzr::Point(-1, -1,  0, 255, 255, 255));
 
-    Frame* frame = new Frame(f);
-    //show_frameeditor(frame);
-    show_clipeditor();
+    frame = new Frame(f);
+    show_frameeditor(frame);
+    //show_clipeditor();
+
+    connect(frame, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+            this, SLOT(frame_changed(const QModelIndex&, const QModelIndex&)));
+
+
+    zmq_ctx = zmq_ctx_new();
+    zmq_pub = lzr::frame_pub_new(zmq_ctx, LZRD_GRAPHICS_ENDPOINT);
 }
 
 LZR::~LZR()
 {
-
+    delete frame;
 }
 
 void LZR::setupUi()
@@ -95,4 +102,12 @@ void LZR::show_clipeditor()
 
     //show the clip editor
     stack->setCurrentWidget(clip_editor);
+}
+
+void LZR::frame_changed(const QModelIndex& start, const QModelIndex& end)
+{
+    Q_UNUSED(start);
+    Q_UNUSED(end);
+    lzr::Frame f = frame->get_frame();
+    send_frame(zmq_pub, f);
 }

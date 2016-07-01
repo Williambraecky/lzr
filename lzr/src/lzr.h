@@ -10,6 +10,7 @@
 #include "tooldock.h"
 #include "pathdock.h"
 #include "settingsdock.h"
+#include "liblzr.h"
 
 
 class LZR : public QMainWindow
@@ -19,6 +20,9 @@ class LZR : public QMainWindow
 public:
     explicit LZR();
     ~LZR();
+
+public slots:
+    void frame_changed(const QModelIndex& start, const QModelIndex& end);
 
 private:
     void setupUi();
@@ -44,4 +48,8 @@ private:
 
     //CLIP EDITOR
     ClipEditor* clip_editor;
+
+    Frame* frame;
+    void* zmq_ctx;
+    void* zmq_pub;
 };

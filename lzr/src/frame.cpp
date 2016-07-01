@@ -138,3 +138,15 @@ bool Frame::set_path(const QModelIndex& index, lzr::Frame path)
     emit dataChanged(index, index); //only every updates one index at a time
     return true;
 }
+
+lzr::Frame Frame::get_frame()
+{
+    lzr::Frame output;
+
+    foreach(const lzr::Frame& path, paths)
+    {
+        output.add_with_blank_jump(path);
+    }
+
+    return output;
+}
