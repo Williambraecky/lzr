@@ -4,7 +4,6 @@
     etherdream on a ZMQ subscriber socket.
 */
 
-#include <unistd.h>
 #include <liblzr.h>
 #include <zmq.h>
 #include <libconfig.h++>
@@ -12,55 +11,80 @@
 #include "dac.h"
 
 using namespace lzr;
+using namespace libconfig;
 
 static void* zmq_ctx;
 static void* zmq_sub;
 static Frame frame;
 static DACList dacs;
+static Config cfg;
 
+bool read_config(char* filename)
+{
+    try
+    {
+        cfg.readFile(filename);
+    }
+    catch(const FileIOException& fioex)
+    {
+        perror("Error reading config file");
+        return false;
+    }
+    catch(const ParseException& pex)
+    {
+        std::cerr << "Parse error at " << pex.getFile() << ":" << pex.getLine()
+                  << " - " << pex.getError() << std::endl;
+        return false;
+    }
+
+    return true;
+}
 
 //main laser client
-int main()
+int main(int argc, char** argv)
 {
-    zmq_ctx = zmq_ctx_new();
-    zmq_sub = frame_sub_new(zmq_ctx, LZRD_GRAPHICS_ENDPOINT);
-
     init_dacs();
+    zmq_ctx = zmq_ctx_new();
+    std::vector<DAC*> dacs;
 
-    while(dacs.size() == 0)
+    if(argc == 1)
     {
-        sleep(1); //wait for the etherdream lib to see pings from the dacs
-        dacs = list_dacs();
+        //list all dacs
+        for(auto name : list_dacs())
+            std::cout << name << std::endl;
+    }
+    else if(argc == 2)
+    {
+        //load config file
+        if(!read_config(argv[1]))
+            return EXIT_FAILURE;
+
+        for(const Setting& scanner : cfg.getRoot())
+        {
+            std::cout << scanner.getName() << std::endl;
+            //zmq_sub = frame_sub_new(zmq_ctx, LZRD_GRAPHICS_ENDPOINT);
+            DAC* dac = dac_connect(scanner.getName());
+            dacs.push_back(dac);
+        }
     }
 
-    for(auto name : dacs)
-        std::cout << name << std::endl;
-
-    DAC* dac = dac_connect(dacs[0]);
-
-    if(!dac)
-    {
-        std::cout << "Failed to connect" << std::endl;
-        exit(1);
-    }
-    else
-    {
-        std::cout << "Connected to: " << dac->name() << std::endl;
-    }
+    return(0);
 
     //enter the main loop
     //-------------------
-    while(1)
-    {
-        recv_frame(zmq_sub, frame);
-        dac->send(frame);
-    }
+    // while(1)
+    // {
+        // recv_frame(zmq_sub, frame);
+        // dac->send(frame);
+    // }
     //-------------------
 
-    delete dac;
+    for(DAC* dac : dacs)
+        delete dac;
 
-    zmq_close(zmq_sub);
+    //zmq_close(zmq_sub);
     zmq_ctx_term(zmq_ctx);
 
     return 0;
 }
+

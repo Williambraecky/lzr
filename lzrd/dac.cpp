@@ -1,6 +1,7 @@
 
 #include "dac.h"
 #include "etherdream.h"
+#include <unistd.h>
 
 
 static inline bool starts_with(const std::string& str,
@@ -19,11 +20,24 @@ void init_dacs()
     etherdream_lib_start();
 }
 
+DACList list_dacs_inst()
+{
+    DACList dacs;
+    append_dacs(dacs, EtherDream::list_dacs());
+    return dacs;
+}
+
 DACList list_dacs()
 {
-    DACList list;
-    append_dacs(list, EtherDream::list_dacs());
-    return list;
+    DACList dacs;
+
+    while(dacs.size() == 0)
+    {
+        sleep(1); //wait for the etherdream lib to see pings from the dacs
+        dacs = list_dacs_inst();
+    }
+
+    return dacs;
 }
 
 DAC* dac_connect(std::string name)

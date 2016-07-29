@@ -6,7 +6,7 @@
 CXX       = g++
 CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -fPIC -ggdb
 CXXFLAGS += -I../liblzr
-LIBS      = -lzmq -lm -lpthread
+LIBS      = -lzmq -lm -lpthread -lconfig++
 
 
 # ============================= files and paths =============================

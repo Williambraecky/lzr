@@ -1,11 +1,11 @@
 /*
     Example:
 
-    EtherDream-FE8372
+    etherdream-dc53d5
     {
         endpoint: "tcp://127.0.0.1:5555"
 
-        # scanner settings (defaults)
+        # scanner settings
         interpolation_function: "linear"
         interpolation_distance: 0.04
         blanking_function: "linear"
@@ -23,8 +23,8 @@
 */
 
 
-EtherDream-FE8372
+etherdream-dc53d5:
 {
-    @include "langling.cfg"
+    // @include "langling.cfg"
     endpoint: "tcp://127.0.0.1:5555"
 }

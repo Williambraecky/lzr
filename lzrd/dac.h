@@ -13,7 +13,7 @@ using namespace lzr;
 
 #define CLAMP(d) ( fmin(fmax(d, -1.0), 1.0) )
 
-#define PREFIX_ETHERDREAM "EtherDream-"
+#define PREFIX_ETHERDREAM "etherdream-"
 
 typedef std::vector<std::string> DACList;
 
@@ -38,5 +38,6 @@ protected:
 
 //main DAC handling functions
 void init_dacs();
-DACList list_dacs();
+DACList list_dacs(); //blocks until at least one DAC is found
+DACList list_dacs_inst(); //instantanious DAC listing
 DAC* dac_connect(std::string name);
