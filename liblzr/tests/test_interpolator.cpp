@@ -13,7 +13,6 @@ static void print_frame(Frame& frame)
         printf("(%f, %f, r=%d, g=%d, b=%d, i=%d)\n", p.x, p.y, p.r, p.g, p.b, p.i);
     }
 }
-*/
 
 
 static void test_xyrgb_line()
@@ -140,11 +139,12 @@ static void test_skip_blank_jumps()
     assert(frame == target);
 }
 
+*/
 
 int main()
 {
-    test_xyrgb_line();
-    test_interp_func();
-    test_skip_blank_jumps();
+    // test_xyrgb_line();
+    // test_interp_func();
+    // test_skip_blank_jumps();
     return 0;
 }
