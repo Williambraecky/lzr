@@ -1,7 +1,7 @@
 # ============================= compile settings =============================
 
-CXX       = g++
-CXXFLAGS += -std=c++14 -Wall -Wextra -pedantic -fPIC -ggdb
+CXX       = clang++
+CXXFLAGS += -std=c++17 -Wall -Wextra -pedantic -fPIC -ggdb
 CXXFLAGS += -I./include
 LIBS      = -lm -lpthread
 ARFLAGS   = rs
@@ -47,7 +47,7 @@ liblzr.a: $(OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 tests/%: tests/%.cpp all
-	$(CXX) $(CXXFLAGS) $(LIBS) $< ./liblzr.a -o $@
+	$(CXX) $(CXXFLAGS) -lgtest_main -lgtest $(LIBS) $< ./liblzr.a -o $@
 
 tools/ilda-view: tools/ilda-view.cpp
 	$(CXX) $(CXXFLAGS) -I/usr/include/SDL2 -lSDL2 $< ./liblzr.a -o $@

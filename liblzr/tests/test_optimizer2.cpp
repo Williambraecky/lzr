@@ -1,9 +1,8 @@
 
-#include <liblzr.hpp>
-
 #include "../src/optimizer2.hpp"
 
-#include <assert.h>
+#include <liblzr.hpp>
+#include <gtest/gtest.h>
 #include <algorithm>
 
 using namespace lzr;
@@ -41,7 +40,7 @@ static void test_junk()
     print_frame(frame);
 }
 
-void test_linear_path()
+TEST(Optimizer2, LinearPath)
 {
     Frame line;
     line.add(Point(0.0, -1.0));
@@ -80,10 +79,4 @@ void test_linear_path()
         std::reverse(dest.begin(), dest.end());
         assert(line == dest);
     }
-}
-
-int main()
-{
-    test_linear_path();
-    return 0;
 }
