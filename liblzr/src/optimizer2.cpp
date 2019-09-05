@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <iostream>
 
 namespace lzr
 {
@@ -23,12 +24,11 @@ inline bool is_cycle(const Frame& frame, size_t f, size_t l)
 
 
 Path::Path(const Frame& frame, size_t f, size_t l)
-  : cycle(is_cycle(frame, f, l))
-  , first_p(std::min(f, l))
-  // in cycles, we exclude the redundant point at the end
-  , last_p(std::max(f, l) - (cycle ? 1 : 0))
+  : first_p(std::min(f, l))
+  , last_p(std::max(f, l))
   // min() and max() above guarantees that first_p <= last_p
-  , size((last_p - first_p) + (cycle ? 0 : 1))
+  , size((last_p - first_p) + 1)
+  , cycle(is_cycle(frame, f, l))
 {
     // allocate the memory needed to store all of our traversals
     traversal_cache_.reserve(size);
@@ -44,7 +44,7 @@ size_t Path::num_traversals() const
     {
         // cyclic paths are allowed to be traversed from any
         // starting point, both forwards and backwards.
-        return size * 2;
+        return (size - 1) * 2;
     }
     else
     {
@@ -83,15 +83,8 @@ PathTraversal Path::traversal(const Frame& frame, size_t t) const
         // Look up the actual point index in the frame
         size_t p = first_p + (t / 2);
 
-        // Look up the adjacent points, from the forward-travel perspective
-        // (we'll swap them later). Be sure to handle the rollover cases where
-        // we reach the ends of the path range.
-        size_t second_p = (p == last_p) ? first_p : (p + 1);
-        size_t penultimate_p = (p == first_p) ? last_p : (p - 1);
-
-        if (!forward)
+        if (forward)
         {
-            std::swap(second_p, penultimate_p);
         }
 
         traversal = {
@@ -154,11 +147,11 @@ void Path::traverse(const Frame& frame, size_t t, Frame& output) const
 
             if (forward)
             {
-                p = ((p == last_p) ? first_p : (p + 1));
+                p = ((p == last_p) ? (first_p + 1) : (p + 1));
             }
             else
             {
-                p = ((p == first_p) ? last_p : (p - 1));
+                p = ((p == first_p) ? (last_p - 1) : (p - 1));
             }
         }
     }
@@ -182,6 +175,16 @@ void Path::traverse(const Frame& frame, size_t t, Frame& output) const
             output.push_back(frame[first_p]);
         }
     }
+}
+
+inline size_t positive_modulo(ssize_t i, ssize_t n)
+{
+    return ((i % n) + n) % n;
+}
+
+size_t Path::point_by_offset(ssize_t point_offset) const
+{
+    return first_p + positive_modulo(point_offset, size);
 }
 
 } // namespace lzr

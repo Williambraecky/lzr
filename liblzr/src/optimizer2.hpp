@@ -1,7 +1,7 @@
 #pragma once
 
 #include <liblzr.hpp>
-
+#include <gtest/gtest_prod.h>
 #include <unordered_map>
 
 namespace lzr
@@ -30,15 +30,15 @@ struct Path
 {
     Path(const Frame& frame, size_t f, size_t l);
 
-    // whether this path is a cycle
-    const bool cycle;
-
     // indicies for the first and last points in the path
     const size_t first_p;
     const size_t last_p;
 
     // Number of points in this path
     const size_t size;
+
+    // whether this path is a cycle
+    const bool cycle;
 
     /**
      * Returns the number of possible traversals of this paths. Use the indicies
@@ -59,6 +59,21 @@ struct Path
     void traverse(const Frame& frame, size_t t, Frame& output) const;
 
 private:
+
+    FRIEND_TEST(Optimizer2, PointByOffset);
+
+    /**
+     * Helper function for accessing points in a looping manner. Returns the normalized
+     * (in bounds) point index for the given offset. For instance:
+     *     point_by_offset(0) == first_p
+     *     point_by_offset(1) == first_p + 1
+     *     ...
+     *     point_by_offset(-1) == last_p
+     *     point_by_offset(-2) == last_p - 1
+     *     ...
+     */
+    size_t point_by_offset(ssize_t point_offset) const;
+
     // Cache of traversals, since the search algorithm will be interested in
     // repeatedly checking various entry possibilities. This is marked mutable
     // because it doesn't unfluence the actual point range specified by this
