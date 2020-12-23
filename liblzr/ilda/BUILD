@@ -13,7 +13,7 @@ cc_library(
         "ilda.hpp"
     ],
     deps=[
-        "//lzr/core",
+        "//liblzr/core",
         "//vendored:portable_endian",
     ],
     visibility = ["//visibility:public"],

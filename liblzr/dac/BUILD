@@ -12,7 +12,7 @@ cc_library(
         "dac.hpp",
     ],
     deps=[
-        "//lzr/core",
+        "//liblzr/core",
         "//vendored/libetherdream:etherdream",
     ],
     visibility = ["//visibility:public"],

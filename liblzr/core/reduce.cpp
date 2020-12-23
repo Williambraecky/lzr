@@ -1,5 +1,5 @@
 
-#include "lzr/core/core.hpp"
+#include "liblzr/core/core.hpp"
 
 namespace lzr {
 

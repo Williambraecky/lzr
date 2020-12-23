@@ -4,7 +4,7 @@
 #include <iostream>
 #include <SDL.h>
 
-#include "lzr/lzr.hpp"
+#include "liblzr/liblzr.hpp"
 
 using namespace lzr;
 

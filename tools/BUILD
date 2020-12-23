@@ -6,7 +6,7 @@ cc_binary(
         "ilda_play.cpp",
     ],
     deps = [
-        "//lzr",
+        "//liblzr",
     ],
 )
 
@@ -14,9 +14,10 @@ cc_binary(
     name = "ilda-view",
     srcs=[
         "ilda_view.cpp",
+    	# "SDL2.h",
     ],
     deps = [
-        "//lzr",
+        "//liblzr",
         "@sdl2",
     ],
     copts = ["-Iexternal/sdl2"],

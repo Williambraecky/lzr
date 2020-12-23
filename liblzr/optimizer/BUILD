@@ -14,7 +14,7 @@ cc_library(
         "optimizer.hpp"
     ],
     deps = [
-        "//lzr/core",
+        "//liblzr/core",
     ],
     visibility = ["//visibility:public"],
 )
