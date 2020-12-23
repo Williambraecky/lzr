@@ -258,6 +258,49 @@ static int read_section_for_projector(ILDA* ilda, uint8_t pd, FrameList& frame_l
 
     return status;
 }
+//MAD - add ilda_read_one_frame
+int ilda_read_one_frame(ILDA* ilda, Frame& frame)
+{
+    int status;
+
+    status = read_header(ilda);
+    if (STATUS_IS_HALTING(status))
+        return ERROR_TO_LZR(status);
+
+    point_reader reader;
+    switch(ilda->h.format)
+    {
+        case FORMAT_0_3D_INDEXED:
+            reader = read_3d_indexed; break;
+        case FORMAT_1_2D_INDEXED:
+            reader = read_2d_indexed; break;
+        case FORMAT_4_3D_TRUE:
+            reader = read_3d_true; break;
+        case FORMAT_5_2D_TRUE:
+            reader = read_2d_true; break;
+        default:
+            /*
+                In this case, we can't skip past an unknown
+                section type, since we don't know the record size.
+            */
+            return LZR_FAILURE;
+    }
+    size_t n_points = ilda->h.number_of_records;
+    frame.clear();
+    frame.reserve(n_points);
+    Point point;
+    for (size_t i = 0; i < n_points; i++)
+    {
+        int r = reader(ilda, point);
+        if (STATUS_IS_HALTING(r)) return ERROR_TO_LZR(r);
+
+        frame.push_back(point);
+    }
+    return (0);
+
+
+}
+//MAD - end
 
 
 int ilda_read(ILDA* ilda, size_t pd, FrameList& frame_list)

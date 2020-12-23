@@ -247,6 +247,9 @@ LIBLZR_EXPORT int ilda_close(ILDA* f);
 //The array you pass to "name" or "company" must be at least 9 chars in length
 LIBLZR_EXPORT int ilda_read(ILDA* f, size_t pd, FrameList& frame_list);
 LIBLZR_EXPORT int ilda_read(ILDA* f, size_t pd, FrameList& frame_list, char* name, char* company);
+//MAD - add ilda_read_one_frame
+LIBLZR_EXPORT int ilda_read_one_frame(ILDA* f, Frame& frame);
+//MAD - end
 
 //write frame(s) for the given projector descriptor to the ILDA file (file must be opened with ilda_open(<filename>, "w") )
 //if no name/company strings are given, they will be null strings.
