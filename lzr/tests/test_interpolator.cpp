@@ -1,10 +1,22 @@
-#include "gtest/gtest.h"
 
-#include "lzr/lzr.hpp"
+#include <stdio.h>
+#include <assert.h>
+#include <liblzr.hpp>
 
 using namespace lzr;
 
-TEST(Interpolator, XYRGBLine)
+/*
+static void print_frame(Frame& frame)
+{
+    for(Point& p : frame)
+    {
+        printf("(%f, %f, r=%d, g=%d, b=%d, i=%d)\n", p.x, p.y, p.r, p.g, p.b, p.i);
+    }
+}
+*/
+
+
+static void test_xyrgb_line()
 {
     Frame orig;
     Frame frame;
@@ -26,7 +38,7 @@ TEST(Interpolator, XYRGBLine)
     frame = orig;
     interpolate(frame, 0.75, linear);
     // print_frame(frame);
-    EXPECT_TRUE(frame == target);
+    assert(frame == target);
 
 
     //max_distance = 1.0 -----------------------------
@@ -40,10 +52,10 @@ TEST(Interpolator, XYRGBLine)
     frame = orig;
     interpolate(frame, 1.0, linear);
     // print_frame(frame);
-    EXPECT_TRUE(frame == target);
+    assert(frame == target);
 }
 
-TEST(Interpolator, InterpFunc)
+static void test_interp_func()
 {
     Frame orig;
     Frame frame;
@@ -64,7 +76,7 @@ TEST(Interpolator, InterpFunc)
     frame = orig;
     interpolate(frame, 1.0, linear);
     // print_frame(frame);
-    EXPECT_TRUE(frame == target);
+    assert(frame == target);
 
     // QUAD --------------------------------------------------
     target.clear();
@@ -77,7 +89,7 @@ TEST(Interpolator, InterpFunc)
     frame = orig;
     interpolate(frame, 1.0, quad);
     // print_frame(frame);
-    EXPECT_TRUE(frame == target);
+    assert(frame == target);
 
     // QUART --------------------------------------------------
     target.clear();
@@ -90,10 +102,10 @@ TEST(Interpolator, InterpFunc)
     frame = orig;
     interpolate(frame, 1.0, quart);
     // print_frame(frame);
-    EXPECT_TRUE(frame == target);
+    assert(frame == target);
 }
 
-TEST(Interpolator, SkipBlankJumps)
+static void test_skip_blank_jumps()
 {
     Frame orig;
     Frame frame;
@@ -125,5 +137,14 @@ TEST(Interpolator, SkipBlankJumps)
     frame = orig;
     interpolate(frame, 0.2, linear);
     // print_frame(frame);
-    EXPECT_TRUE(frame == target);
+    assert(frame == target);
+}
+
+
+int main()
+{
+    test_xyrgb_line();
+    test_interp_func();
+    test_skip_blank_jumps();
+    return 0;
 }

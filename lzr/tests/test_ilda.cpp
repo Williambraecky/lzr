@@ -1,8 +1,7 @@
 
+#include <liblzr.hpp>
 #include <cstdio>
 #include <string.h>
-
-#include "lzr/lzr.hpp"
 
 #define TMP_ILDA_FILE "/tmp/output.ilda"
 #define NAME "NAME----"
