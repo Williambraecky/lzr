@@ -50,7 +50,7 @@ static int write_frame(ILDA* ilda, Frame& frame, size_t pd, const char* name, co
     frame_bounds.add(Point(1.0, 1.0));
     frame_bounds.add(Point(-1.0, 1.0));
     frame_bounds.add(Point(-1.0, -1.0));
-    mask(frame, frame_bounds, true);
+    //mask(frame, frame_bounds, true); //MAD: We might not need to do this since we handle flipping in our own engine
 
     //skip empty frames, since they signify the end of a file
     if(frame.size() == 0)
