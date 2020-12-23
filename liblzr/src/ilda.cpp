@@ -183,6 +183,15 @@ int read_header(ILDA* ilda)
 {
     static_assert(sizeof(ilda_header) == 32, "ILDA header is not 32 bytes!");
 
+    //MAD - store current offset in file
+    auto offset = ftell(ilda->f);
+    if (offset == -1)
+    {
+        ilda->error = "Could not get offset in file";
+        return ILDA_ERROR;
+    }
+    //MAD - end
+
     //read one ILDA header
     size_t r = fread((void*) &(ilda->h),
                      1,
@@ -197,6 +206,10 @@ int read_header(ILDA* ilda)
 
         return ILDA_ERROR;
     }
+
+    //MAD - store current offset in file
+    ilda->current_projector()->frame_offsets.push_back(offset);
+    //MAD - end
 
     //is it prefixed with "ILDA"?
     if(strcmp(ILDA_MAGIC, ilda->h.ilda) != 0)

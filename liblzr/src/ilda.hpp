@@ -154,6 +154,7 @@ class ILDA_Projector
         // they are copied directly to the user's array.
         // This is mostly for book-keeping
         size_t n_frames; // the size of the frame array
+        std::vector<long int> frame_offsets;
     private:
         std::vector<ilda_color> palette;
 };
