@@ -27,20 +27,23 @@ Building
 
 Dependencies:
 
-- C++17 compiler (g++)
+- C++11 compiler (g++)
+- Make
+- [nlohmann/json](https://github.com/nlohmann/json)
 - SDL 2.0
 
 Very simple right now:
 
 ```shell
-$ bazel build //...
+$ make
 ```
 
-This will build the library, as well as tools. Some example invocations:
+This will produce the following binaries:
 
-```shell
-$ ./bazel-bin/tools/ilda-view share/ildatest.ild
-```
+- liblzr/liblzr.so
+- liblzr/liblzr.a
+- lzrv/lzrv
+
 
 License
 =======
