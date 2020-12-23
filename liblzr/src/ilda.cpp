@@ -10,7 +10,7 @@ namespace lzr {
 /*  API Functions                                                             */
 /******************************************************************************/
 
-ILDA* ilda_open(const char* filename, const char* mode)
+ILDA* ilda_open(const char* filename, const char* mode, const bool validate)
 {
     ILDA* ilda = new ILDA();
     //make sure ilda error is set to nullptr by default
@@ -29,11 +29,14 @@ ILDA* ilda_open(const char* filename, const char* mode)
         }
 
         //scan the file, populate the frame counts
-        if(init_frame_counts(ilda) != ILDA_CONTINUE)
+        if (validate)
         {
-            perror("Failed to initialize frame counts");
-            delete ilda;
-            return NULL;
+            if(init_frame_counts(ilda) != ILDA_CONTINUE)
+            {
+                perror("Failed to initialize frame counts");
+                delete ilda;
+                return NULL;
+            }
         }
     }
     else if(strcmp(mode, "w") == 0)

@@ -237,8 +237,9 @@ class ILDA;
 
 // "r" = read
 // "w" = write
+// MAD - validate = whether to check for file validity or not (useful for reopening)
 //Will return NULL on failure
-LIBLZR_EXPORT ILDA* ilda_open(const char* filename, const char* mode);
+LIBLZR_EXPORT ILDA* ilda_open(const char* filename, const char* mode, const bool validate = true);
 
 //closes the ILDA file, and releases the parsing context
 LIBLZR_EXPORT int ilda_close(ILDA* f);
