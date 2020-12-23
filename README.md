@@ -1,3 +1,5 @@
+NOTE: This repo contains the changes needed for MadMapper, we do not recommend using this branch directly but you are free to take a look at what we changed and pick what you need.
+
 
 **DANGER** Heavy objects overhead
 
