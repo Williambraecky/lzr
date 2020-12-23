@@ -13,6 +13,8 @@ namespace lzr {
 ILDA* ilda_open(const char* filename, const char* mode)
 {
     ILDA* ilda = new ILDA();
+    //make sure ilda error is set to nullptr by default
+    ilda->error = nullptr;
 
     if(strcmp(mode, "r") == 0)
     {
