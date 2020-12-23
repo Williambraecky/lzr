@@ -1,6 +1,5 @@
 
 #include "optimizer.hpp"
-#include "interpolator.hpp"
 
 namespace lzr {
 

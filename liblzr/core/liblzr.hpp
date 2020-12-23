@@ -176,6 +176,14 @@ LIBLZR_EXPORT float linear(float t); /*----*----*----*----*----*----*----*----*/
 LIBLZR_EXPORT float quad(float t);   /*---*---*-----*-----*-----*-----*---*---*/
 LIBLZR_EXPORT float quart(float t);  /*-*---*-----*-------*-------*-----*---*-*/
 
+//generates extra points on a line
+//only adds the interior points, not the endpoints
+int interp_line(Frame& working, float max_distance, interpolation_func func, Point start, Point end);
+
+//interpolates only lit lines. Uses the function above
+int interpolate(Frame& frame, float max_distance, interpolation_func func);
+
+
 //fwrd decl
 class OptimizerInternals;
 

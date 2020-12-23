@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <cmath>
-#include <liblzr.hpp>
+
+#include "liblzr/core/liblzr.hpp"
 
 namespace lzr {
 

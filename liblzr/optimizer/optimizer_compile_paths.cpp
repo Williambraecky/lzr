@@ -8,7 +8,6 @@
 
 #include <stdio.h>
 #include "optimizer.hpp"
-#include "interpolator.hpp"
 
 namespace lzr {
 

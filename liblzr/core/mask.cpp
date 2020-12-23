@@ -1,7 +1,8 @@
 
 #include <math.h>
 #include <algorithm> //sort()
-#include <liblzr.hpp>
+
+#include "liblzr/core/liblzr.hpp"
 
 namespace lzr {
 

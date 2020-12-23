@@ -1,7 +1,6 @@
 
 #include <string.h> //memset() zeroing out struct
 #include <algorithm> //min(), max()
-#include <liblzr.hpp>
 #include "ilda.hpp"
 
 // not in C++11, so stub this out for now

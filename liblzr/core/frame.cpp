@@ -1,6 +1,7 @@
 
 #include <vector>
-#include <liblzr.hpp>
+
+#include "liblzr/core/liblzr.hpp"
 
 namespace lzr {
 

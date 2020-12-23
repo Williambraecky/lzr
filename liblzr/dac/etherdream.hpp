@@ -1,8 +1,9 @@
 
 #pragma once
 
+#include "vendored/libetherdream/etherdream.h"
+
 #include "dac.hpp"
-#include "libetherdream/etherdream.h"
 
 namespace lzr {
 

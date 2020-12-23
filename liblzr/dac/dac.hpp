@@ -6,7 +6,8 @@
 #include <iomanip>
 #include <iostream>
 #include <math.h>
-#include <liblzr.hpp>
+
+#include "liblzr/core/liblzr.hpp"
 
 #define CLAMP(d) ( fmin(fmax(d, -1.0), 1.0) )
 

@@ -1,12 +1,10 @@
-
-
 #pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <liblzr.hpp>
 
-#include "include/portable_endian.h"
+#include "liblzr/core/liblzr.hpp"
+#include "vendored/portable_endian.h"
 
 namespace lzr {
 
